@@ -12,7 +12,7 @@ YELLOW = (255,255,0)
 FPS = 60
 VEL = 5
 BULLET_VEL = 7
-MAX_BULLETS = 3
+MAX_BULLETS = 10
 
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 55,40
 
@@ -67,11 +67,15 @@ def handle_bullets(red_bullets, yellow_bullets, red,yellow):
         if red.colliderect(bullet):
             pygame.event.post(pygame.event.Event(RED_HIT))
             yellow_bullets.remove(bullet)
+        if bullet.x > WIDTH:
+            yellow_bullets.remove(bullet)
             
     for bullet in red_bullets:
         bullet.x -= BULLET_VEL
         if yellow.colliderect(bullet):
             pygame.event.post(pygame.event.Event(YELLOW_HIT))
+            red_bullets.remove(bullet)
+        if bullet.x < 0:
             red_bullets.remove(bullet)
 
 def main():
