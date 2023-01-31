@@ -5,6 +5,7 @@ WIN = pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption('First Game')
 
 BACKGROUND_COLOR = (255,255,255)
+BORDER_COLOR = (0,0,0)
 
 FPS = 60
 VEL = 5
@@ -12,6 +13,7 @@ VEL = 5
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 55,40
 
 MIDDLE = (HEIGHT/2)-SPACESHIP_HEIGHT
+MIDDLE_BORDER = pygame.Rect((WIDTH/2)-10,0,10,HEIGHT)
 
 YELLOW_SPACESHIP_IMAGE = pygame.image.load('assets/spaceship_yellow.png')
 YELLOW_SPACESHIP = pygame.transform.rotate(pygame.transform.scale(YELLOW_SPACESHIP_IMAGE, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT)),90)
@@ -20,6 +22,7 @@ RED_SPACESHIP = pygame.transform.rotate(pygame.transform.scale(RED_SPACESHIP_IMA
 
 def draw_window(red,yellow):
     WIN.fill(BACKGROUND_COLOR)
+    pygame.draw.rect(WIN,BORDER_COLOR,MIDDLE_BORDER)
     WIN.blit(YELLOW_SPACESHIP, (yellow.x, yellow.y))
     WIN.blit(RED_SPACESHIP, (red.x,red.y))
     pygame.display.update()
@@ -27,23 +30,23 @@ def draw_window(red,yellow):
     
     
 def yellow_handle_movement(keys_pressed, yellow):
-    if keys_pressed[pygame.K_a]:
+    if keys_pressed[pygame.K_a] and yellow.x - VEL > 0:  # LEFT
         yellow.x -= VEL
-    if keys_pressed[pygame.K_d]:
+    if keys_pressed[pygame.K_d] and yellow.x + VEL + yellow.width < MIDDLE_BORDER.x:  # RIGHT
         yellow.x += VEL
-    if keys_pressed[pygame.K_w]:
+    if keys_pressed[pygame.K_w] and yellow.y - VEL > 0:  # UP
         yellow.y -= VEL
-    if keys_pressed[pygame.K_s]:
+    if keys_pressed[pygame.K_s] and yellow.y + VEL + yellow.height < HEIGHT - 15:  # DOWN
         yellow.y += VEL
         
 def red_handle_movement(keys_pressed, red):
-    if keys_pressed[pygame.K_LEFT]:
+    if keys_pressed[pygame.K_LEFT] and red.x - VEL > MIDDLE_BORDER.x + MIDDLE_BORDER.width:  # LEFT
         red.x -= VEL
-    if keys_pressed[pygame.K_RIGHT]:
+    if keys_pressed[pygame.K_RIGHT] and red.x + VEL + red.width < WIDTH:  # RIGHT
         red.x += VEL
-    if keys_pressed[pygame.K_UP]:
+    if keys_pressed[pygame.K_UP] and red.y - VEL > 0:  # UP
         red.y -= VEL
-    if keys_pressed[pygame.K_DOWN]:
+    if keys_pressed[pygame.K_DOWN] and red.y + VEL + red.height < HEIGHT - 15:  # DOWN
         red.y += VEL
 
 def main():
