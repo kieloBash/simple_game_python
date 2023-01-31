@@ -9,6 +9,7 @@ BORDER_COLOR = (0,0,0)
 
 FPS = 60
 VEL = 5
+BULLET_VEL = 7
 
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 55,40
 
@@ -26,8 +27,6 @@ def draw_window(red,yellow):
     WIN.blit(YELLOW_SPACESHIP, (yellow.x, yellow.y))
     WIN.blit(RED_SPACESHIP, (red.x,red.y))
     pygame.display.update()
-    
-    
     
 def yellow_handle_movement(keys_pressed, yellow):
     if keys_pressed[pygame.K_a] and yellow.x - VEL > 0:  # LEFT
@@ -53,7 +52,7 @@ def main():
     
     red = pygame.Rect(700,MIDDLE,SPACESHIP_WIDTH,SPACESHIP_HEIGHT)
     yellow = pygame.Rect(200,MIDDLE,SPACESHIP_WIDTH,SPACESHIP_HEIGHT)
-    
+    bullets = [] 
     
     clock = pygame.time.Clock()
     run = True
